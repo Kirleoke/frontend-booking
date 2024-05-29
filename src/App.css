@@ -1,0 +1,161 @@
+* {
+    margin:0 auto;
+}
+
+.Calendar {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.button {
+    display: flex;
+    padding: 10px 15px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    border: 2px solid #000000;
+    color: var(--rdp-accent-color-dark, #292929);
+    font-family: Georgia, serif;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 22.1px */
+    cursor: pointer;
+}
+
+.PickTime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.TextPick {
+    margin:0 auto;
+}
+
+.PickButton {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    justify-content: space-around;
+    transition: 0.9s;
+}
+.PickButton button{
+    margin: 20px 15px 0 0;
+}
+
+.PickButton button:hover {
+    background-color: rgba(51, 99, 2, 0.22);
+    transition: 0.9s;
+}
+
+
+.text-field__input{
+  display: block;
+  width: 450px;
+  height: calc(2.25rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.button-login {
+    display: flex;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #000000;
+    color: var(--rdp-accent-color-dark, #0e0000);
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 22.1px */
+    cursor: pointer;
+    transition: 0.9s;
+}
+
+.button-login:hover {
+    background-color: rgba(0, 128, 0, 0.404);
+    transition: 0.9s;
+}
+
+.App-header_Links {
+    margin: 20px;
+    display: block;
+    flex-direction: row;
+    width: 100%;
+    text-align: center;
+}
+
+.link-new-register {
+    display: flex;
+    padding: 5px 5px;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #000000;
+    color: var(--rdp-accent-color-dark, #0e0000);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    cursor: pointer;
+    transition: 0.9s;
+}
+
+.link-new-register:hover {
+    background-color: rgba(22, 62, 92, 0.25);
+    transition: 0.9s;
+    cursor: pointer;
+}
+
+.App-header_authorization{
+
+}
+a {
+    outline: none;
+    text-decoration: none;
+    transition: 0.9s;
+    margin: 30px;
+    cursor: pointer;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+}
+
+a:link {
+    color: #3939c2;
+}
+
+a:visited {
+    transition: 0.9s;
+    color: #3939c2;
+}
+
+
+a:hover {
+    transition: 0.9s;
+    background: rgba(170, 174, 254, 0.55);
+    padding: 10px;
+}
+
+a:active {
+    transition: 0.9s;
+    background: #3939c2;
+    padding: 10px;
+    color: #3939c2;
+}

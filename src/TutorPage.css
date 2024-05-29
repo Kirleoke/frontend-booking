@@ -1,0 +1,147 @@
+.tutor-page {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.Ava {
+    max-width: 300px;
+    max-height: 500px;
+}
+
+
+
+.hero-section {
+    background-color: #f5f5f5;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+}
+
+.hero-section h2 {
+    font-size: 2rem;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.hero-section button {
+    display: flex;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-primary {
+    display: flex;
+    margin-top: 20px;
+}
+.hero-section button:hover {
+    padding: 15px 25px;
+}
+
+.about-section {
+    padding: 50px 0;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+}
+
+.about-section p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.subjects-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.subjects-section h2 {
+    font-size: 2rem;
+}
+
+.subjects-section ul {
+    padding: 0;
+    margin-top: 30px;
+}
+
+.subjects-section li {
+    list-style-type: none;
+    margin-top: 20px;
+    margin-right: 0;
+    font-size: 1.5rem;
+}
+
+.rates-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.rates-section h2 {
+    font-size: 2rem;
+}
+
+.rates-section p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-top: 30px;
+}
+
+.testimonials-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    font-size: 2rem;
+}
+
+.testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.testimonial {
+    width: 300px;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-section {
+    padding: 50px 0;
+}
+
+.contact-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer p {
+    font-size: 1.2rem;
+}
