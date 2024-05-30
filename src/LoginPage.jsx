@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
-    const [email, setEmail] = useState("");
+    const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate("/register");
-    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("/auth/login", {
-                email,
+            const response = await axios.post("api/v1/auth/login", {
+                login,
                 password,
             });
 
             // Сохраняем токен авторизации
-            const token = response.data.token;
-            localStorage.setItem("token", token);
+            const token = response.data;
+            console.log(token);
+            // Сохраняем токены в локальном хранилище
+            localStorage.setItem('token', response.data.access);
+
 
             // Перенаправляем пользователя на страницу приложения
             navigate("/");
@@ -38,8 +39,8 @@ const LoginPage = () => {
                 className="text-field__input"
                 type="email"
                 placeholder="Адрес электронной почты"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
             />
             <input
                 className="text-field__input"
@@ -51,9 +52,9 @@ const LoginPage = () => {
             <button className="button-login" type="submit">
                 Войти
             </button>
-            <button className="link-new-register" onClick={handleClick}>
-                Нет учётной записи? Создать.
-            </button>
+            <p className="link-register">
+                Нет аккаунта? <Link to="/register">Зарегестрироваться</Link>
+            </p>
         </form>
     );
 };

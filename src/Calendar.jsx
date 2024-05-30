@@ -1,29 +1,39 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './App.css';
 import Button from './TimeButton';
+import axios from './axiosInstance'; // Используем наш экземпляр Axios с перехватчиком
 
 export default function CalendarGfg() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [availableTimes, setAvailableTimes] = useState([]);
 
+    useEffect(() => {
+        // Получите доступные временные интервалы при монтировании компонента
+        handleDateChange(selectedDate);
+    }, []);
+
     function handleDateChange(date) {
         setSelectedDate(date);
 
-        // Получаем доступные временные интервалы для выбранной даты
-        const now = new Date();
-        const availableTimes = []; // Замените на фактические доступные времена
-        const filteredTimes = availableTimes.filter(time => {
-            const [startHour, startMinute] = time.split('-').map(Number);
-            const startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startHour, startMinute);
-            return startTime >= now;
-        });
-        setAvailableTimes(filteredTimes);
+
+        async function getAvailableTimes() {
+            try {
+                const offset = date.getTimezoneOffset()
+                date = new Date(date.getTime() - (offset*60*1000))
+                const response = await axios.get(`/api/v1/bookings/${date.toISOString().split('T')[0]}/periods/`);
+
+                const availableTimes = response.data;
+                setAvailableTimes(availableTimes);
+            } catch (error) {
+                console.error(error);
+                alert('Не удалось получить доступные времена');
+            }
+        }
+
+        getAvailableTimes();
     }
-
-
-
 
     function handleTimeButtonClick(time) {
         // Handle the click event for the time button
@@ -38,7 +48,9 @@ export default function CalendarGfg() {
     }
 
     return (
+
         <div>
+
             <div className='Calendar'>
                 <h1>выбор даты</h1>
                 <Calendar
@@ -52,8 +64,12 @@ export default function CalendarGfg() {
                 <h2 className='TextPick'>Выбор времени</h2>
                 <div className='PickButton'>
                     {availableTimes.map((time) => (
-                        <Button className='PickButton__button' key={time} value={time}
-                                handleClick={() => handleTimeButtonClick(time)}/>
+                        <Button
+                            className='PickButton__button'
+                            key={time.id}  // Используем идентификатор элемента в качестве ключа
+                            value={time.value}
+                            handleClick={() => handleTimeButtonClick(time.value)}
+                        />
                     ))}
                 </div>
             </div>

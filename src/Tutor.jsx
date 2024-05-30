@@ -3,6 +3,7 @@ import './TutorPage.css';
 import Vlad from './Photo/Vlad.jpg';
 import { useNavigate } from "react-router-dom";
 
+
 const TutorPage = () => {
     const navigate = useNavigate();
 
@@ -11,6 +12,7 @@ const TutorPage = () => {
     };
 
     return (
+
         <div className='tutor-page'>
             {/* ... */}
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const RegisterPage = () => {
@@ -7,7 +7,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [lastName, setLastName] = useState("");
-    const [firstName, setFirstName] = useState("");
+    const [name, setFirstName] = useState("");
     const [patronymic, setPatronymic] = useState("");
     const [phone, setPhoneNumber] = useState("");
     const navigate = useNavigate();
@@ -16,12 +16,12 @@ const RegisterPage = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("localhost:8090/api/v1/auth/registration", {
+            const response = await axios.post("api/v1/auth/registration", {
                 nickname,
                 email,
                 password,
                 lastName,
-                firstName,
+                name,
                 patronymic,
                 phone,
             });
@@ -39,61 +39,67 @@ const RegisterPage = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                className="text-field__input"
-                type="text"
-                placeholder="Имя пользователя"
-                value={nickname}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="email"
-                placeholder="Адрес электронной почты"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="password"
-                placeholder="Пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="text"
-                placeholder="Фамилия"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="text"
-                placeholder="Имя"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="text"
-                placeholder="Отчество"
-                value={patronymic}
-                onChange={(e) => setPatronymic(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="text"
-                placeholder="Номер телефона"
-                value={phone}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+        <div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    className="text-field__input"
+                    type="text"
+                    placeholder="Имя пользователя"
+                    value={nickname}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="email"
+                    placeholder="Адрес электронной почты"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="password"
+                    placeholder="Пароль"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="text"
+                    placeholder="Фамилия"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="text"
+                    placeholder="Имя"
+                    value={name}
+                    onChange={(e) => setFirstName(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="text"
+                    placeholder="Отчество"
+                    value={patronymic}
+                    onChange={(e) => setPatronymic(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="text"
+                    placeholder="Номер телефона"
+                    value={phone}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                />
 
-            <button className="button-login" type="submit">
-                Зарегистрироваться
-            </button>
-        </form>
+                <button className="button-login" type="submit">
+                    Зарегистрироваться
+                </button>
+            </form>
+            <p>
+                Уже есть аккаунт? <Link to="/login">Войти</Link>
+            </p>
+        </div>
+
     );
 };
 
