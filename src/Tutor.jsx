@@ -11,6 +11,10 @@ const TutorPage = () => {
         navigate("/entry");
     };
 
+    const handleEmailClick = () => {
+        window.location.href = "mailto:MuravevVladRep@gmail.com";
+    };
+
     return (
 
         <div className='tutor-page'>
@@ -62,12 +66,12 @@ const TutorPage = () => {
             <div className='contact-section'>
                 <h2>Связаться со мной</h2>
                 <div className='contact-content'>
-                <p>MuravevVladRep@gmail.com</p>
-                <p>+79103843536</p>
+                    <p onClick={handleEmailClick}>MuravevVladRep@gmail.com</p>
+                    <p>+79103843536</p>
                 </div>
             </div>
 
-            <div className='footer'></div>
+
         </div>
     );
 };

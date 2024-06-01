@@ -1,6 +1,8 @@
-import { useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from './AuthContext';
 
 const RegisterPage = () => {
     const [nickname, setUsername] = useState("");
@@ -11,6 +13,7 @@ const RegisterPage = () => {
     const [patronymic, setPatronymic] = useState("");
     const [phone, setPhoneNumber] = useState("");
     const navigate = useNavigate();
+    const { login: setAuthenticated } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,6 +32,9 @@ const RegisterPage = () => {
             // Сохраняем токен авторизации
             const token = response.data.token;
             localStorage.setItem("token", token);
+
+            // Устанавливаем состояние аутентификации
+            setAuthenticated();
 
             // Перенаправляем пользователя на страницу приложения
             navigate("/");
@@ -99,7 +105,6 @@ const RegisterPage = () => {
                 Уже есть аккаунт? <Link to="/login">Войти</Link>
             </p>
         </div>
-
     );
 };
 

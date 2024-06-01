@@ -1,147 +1,149 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
 .tutor-page {
-    font-family: 'Arial', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
     color: #333;
 }
 
-.Ava {
-    max-width: 300px;
-    max-height: 500px;
+p {
+    line-height: 1.6;
 }
 
-
-
+/* Герой-секция */
 .hero-section {
-    background-color: #f5f5f5;
-    padding: 50px 0;
     text-align: center;
+    background-color: #fff;
+    padding: 50px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.hero-section h1 {
-    font-size: 3rem;
+.hero-section img {
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px 0;
 }
 
-.hero-section h2 {
-    font-size: 2rem;
-}
-
-.hero-section p {
-    font-size: 1.5rem;
-    line-height: 1.5;
-}
-
-.hero-section button {
-    display: flex;
-    background-color: #007bff;
+.button-primary {
+    background-color: #61dafb;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.button-primary {
-    display: flex;
-    margin-top: 20px;
-}
-.hero-section button:hover {
-    padding: 15px 25px;
+.button-primary:hover {
+    background-color: #21a1f1;
 }
 
-.about-section {
-    padding: 50px 0;
-}
-
-.about-section h2 {
-    font-size: 2rem;
-}
-
-.about-section p {
-    font-size: 1.5rem;
-    line-height: 1.5;
-}
-
+/* Секция предметов */
 .subjects-section {
-    padding: 50px 0;
-    text-align: center;
-}
-
-.subjects-section h2 {
-    font-size: 2rem;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .subjects-section ul {
+    list-style-type: none;
     padding: 0;
-    margin-top: 30px;
 }
 
 .subjects-section li {
-    list-style-type: none;
-    margin-top: 20px;
-    margin-right: 0;
-    font-size: 1.5rem;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
 }
 
+/* Секция стоимости */
 .rates-section {
-    padding: 50px 0;
-    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.rates-section h2 {
-    font-size: 2rem;
+.rates-section-subject p {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
 }
 
-.rates-section p {
-    font-size: 1.5rem;
-    line-height: 1.5;
-    margin-top: 30px;
-}
-
+/* Секция отзывов */
 .testimonials-section {
-    padding: 50px 0;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
     text-align: center;
-}
-
-.testimonials-section h2 {
-    font-size: 2rem;
 }
 
 .testimonials {
     display: flex;
+    justify-content: space-between;
+    gap: 10px;
     flex-wrap: wrap;
-    justify-content: space-around;
-
 }
 
 .testimonial {
-    width: 300px;
-    padding: 20px;
-    margin: 10px;
-    border: 1px solid #ccc;
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 10px;
     border-radius: 5px;
+    margin: 10px;
+    min-width: 250px;
 }
 
+/* Секция контактов */
 .contact-section {
-    padding: 50px 0;
-}
-
-.contact-section h2 {
-    text-align: center;
-    font-size: 2rem;
+    background-color: #282c34;
+    color: #61dafb;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     margin-bottom: 20px;
 }
 
-.contact-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.contact-section h2 {
+    color: #ffffff;
 }
 
-.footer {
-    background-color: #f5f5f5;
-    padding: 20px 0;
+.contact-content {
     text-align: center;
 }
 
-.footer p {
-    font-size: 1.2rem;
+.contact-content p {
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+/* Футер */
+.footer {
+    background-color: #282c34;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 20px;
 }

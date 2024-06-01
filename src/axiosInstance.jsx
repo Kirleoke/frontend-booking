@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 // Создаем экземпляр Axios по умолчанию
 const axiosInstance = axios.create();
 
