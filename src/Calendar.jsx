@@ -26,22 +26,42 @@ export default function CalendarGfg() {
     async function getAvailableTimes() {
         try {
             const response = await axios.get(`/api/v1/bookings/${selectedDate.toISOString().split('T')[0]}/periods/`);
-            setAvailableTimes(response.data);
+            let times = response.data;
+            if (selectedDate.toDateString() === new Date().toDateString()) {
+                times = filterPastTimes(times);
+            }
+            setAvailableTimes(times);
         } catch (error) {
             handleAuthError(error);
         }
     }
 
+    function filterPastTimes(times) {
+        const currentTime = new Date();
+        const currentHour = currentTime.getHours();
+        return times.filter(time => {
+            const [startHour] = time.value.split('-').map(Number);
+            return startHour > currentHour;
+        });
+    }
+
     async function handleTimeButtonClick(periodID) {
         try {
-            await axios.post(`/api/v1/bookings/${selectedDate.toISOString().split('T')[0]}/periods/${periodID}/`);
+            const userInfo = getUserInfo(); // Получаем информацию о пользователе
+            await axios.post(`/api/v1/bookings/${selectedDate.toISOString().split('T')[0]}/periods/${periodID}/`, userInfo);
             setModalMessage('Вы успешно забронировали время!');
             setModalIsOpen(true);
             getAvailableTimes();
             getMyReservations();
+            sendTelegramNotification(userInfo, periodID); // Отправка уведомления в Telegram с данными о дате и времени
         } catch (error) {
             handleAuthError(error);
         }
+    }
+
+    function getUserInfo() {
+        return {
+        };
     }
 
     async function getMyReservations() {
@@ -53,11 +73,12 @@ export default function CalendarGfg() {
         }
     }
 
-    async function handleDeleteReservation(reservationID) {
+    async function handleDeleteReservation(reservationID, reservationInfo) {
         try {
             await axios.delete(`/api/v1/bookings/${reservationID}/`);
             setModalMessage('Резервация успешно удалена!');
             setModalIsOpen(true);
+            cancelReservationNotification(reservationInfo); // Отправляем уведомление об отмене записи
             getMyReservations();
         } catch (error) {
             console.error('Ошибка при удалении резервации:', error);
@@ -94,6 +115,38 @@ export default function CalendarGfg() {
     function closeModal() {
         setModalIsOpen(false);
         setModalAction(null);
+    }
+
+    async function sendTelegramNotification(userInfo, periodID) {
+        try {
+            const period = availableTimes.find(time => time.id === periodID);
+            const message = `Новая запись!\nДата: ${selectedDate.toISOString().split('T')[0]}\nВремя: ${period.value}`;
+
+            await axios.post(`https://api.telegram.org/bot7224423901:AAGDIA2fYiq2Q-XFgWjlJN7-JH7OlTL6AkY/sendMessage`, {
+                chat_id: 651730954,
+                text: message
+            });
+            console.log("Уведомление успешно отправлено в Telegram");
+        } catch (error) {
+            console.error("Ошибка при отправке уведомления в Telegram:", error);
+        }
+    }
+
+    function cancelReservationNotification(reservationInfo) {
+        try {
+            const message = `Запись отменена!\nДата: ${reservationInfo.date}\nВремя: ${reservationInfo.reservationPeriod.value}`;
+
+            axios.post(`https://api.telegram.org/bot7224423901:AAGDIA2fYiq2Q-XFgWjlJN7-JH7OlTL6AkY/sendMessage`, {
+                chat_id: 651730954,
+                text: message
+            }).then(response => {
+                console.log("Уведомление об отмене записи успешно отправлено в Telegram");
+            }).catch(error => {
+                console.error("Ошибка при отправке уведомления об отмене записи в Telegram:", error);
+            });
+        } catch (error) {
+            console.error("Ошибка при отправке уведомления об отмене записи в Telegram:", error);
+        }
     }
 
     return (
@@ -133,10 +186,7 @@ export default function CalendarGfg() {
                                     <span>{reservation.date} - {reservation.reservationPeriod.value}</span>
                                     <button
                                         className='DeleteButton'
-                                        onClick={() => handleDeleteReservation(reservation.id)}
-                                    >
-                                        Удалить
-                                    </button>
+                                        onClick={() => handleDeleteReservation(reservation.id, reservation)}>Удалить</button>
                                 </li>
                             ))}
                         </ul>
@@ -146,8 +196,7 @@ export default function CalendarGfg() {
                         onRequestClose={closeModal}
                         contentLabel="Сообщение"
                         className="Modal"
-                        overlayClassName="Overlay"
-                    >
+                        overlayClassName="Overlay">
                         <h2>{modalMessage}</h2>
                         <button onClick={closeModal}>Закрыть</button>
                         {modalAction && <button onClick={modalAction}>Перейти</button>}
@@ -159,3 +208,4 @@ export default function CalendarGfg() {
         </div>
     );
 }
+

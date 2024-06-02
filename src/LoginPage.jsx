@@ -1,12 +1,14 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Modal from "react-modal";
 import { AuthContext } from './AuthContext';
 
 const LoginPage = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
     const navigate = useNavigate();
     const { login: setAuthenticated } = useContext(AuthContext);
 
@@ -33,33 +35,48 @@ const LoginPage = () => {
             navigate("/");
         } catch (error) {
             // Отображаем сообщение об ошибке
-            alert("Ошибка при авторизации");
+            setModalMessage("Ошибка при авторизации");
+            setModalIsOpen(true);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                className="text-field__input"
-                type="email"
-                placeholder="Адрес электронной почты"
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
-            />
-            <input
-                className="text-field__input"
-                type="password"
-                placeholder="Пароль"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button className="button-login" type="submit">
-                Войти
-            </button>
-            <p className="link-register">
-                Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
-            </p>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit}>
+                <input
+                    className="text-field__input"
+                    type="email"
+                    placeholder="Адрес электронной почты"
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
+                />
+                <input
+                    className="text-field__input"
+                    type="password"
+                    placeholder="Пароль"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <button className="button-login" type="submit">
+                    Войти
+                </button>
+                <p className="link-register">
+                    Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+                </p>
+            </form>
+
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                className="Modal"
+                overlayClassName="Overlay"
+                contentLabel="Ошибка авторизации"
+            >
+                <h2>Ошибка</h2>
+                <div>{modalMessage}</div>
+                <button onClick={() => setModalIsOpen(false)}>Закрыть</button>
+            </Modal>
+        </div>
     );
 };
 

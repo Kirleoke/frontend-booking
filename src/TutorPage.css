@@ -1,11 +1,56 @@
 /* Общие стили */
+/* Общие стили */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
     margin: 0;
     padding: 0;
 }
+
+.tutor-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Light mode styles */
+.light-mode {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.light-mode h1, .light-mode h2 {
+    color: #333;
+}
+
+/* Dark mode styles */
+.dark-mode {
+    background-color: #333;
+    color: #f9f9f9;
+}
+
+.dark-mode h1, .dark-mode h2 {
+    color: #f9f9f9;
+}
+
+.toggle-theme-button {
+    background-color: #61dafb;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.toggle-theme-button:hover {
+    background-color: #21a1f1;
+}
+
+/* Additional component styles (same as original, just removed for brevity) */
+
+/* Hero section, subjects section, rates section, testimonials section, contact section styles */
+
 
 .tutor-page {
     max-width: 1200px;
@@ -147,3 +192,4 @@ p {
     border-radius: 8px;
     margin-top: 20px;
 }
+

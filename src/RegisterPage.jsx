@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from './AuthContext';
+import Modal from "react-modal";
+import { AuthContext } from "./AuthContext";
 
 const RegisterPage = () => {
     const [nickname, setUsername] = useState("");
@@ -12,11 +12,20 @@ const RegisterPage = () => {
     const [name, setFirstName] = useState("");
     const [patronymic, setPatronymic] = useState("");
     const [phone, setPhoneNumber] = useState("");
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
     const navigate = useNavigate();
     const { login: setAuthenticated } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Проверка на пустые поля
+        if (!nickname || !email || !password || !lastName || !name || !phone) {
+            setModalMessage("Пожалуйста, заполните все поля.");
+            setModalIsOpen(true);
+            return;
+        }
 
         try {
             const response = await axios.post("api/v1/auth/registration", {
@@ -39,8 +48,29 @@ const RegisterPage = () => {
             // Перенаправляем пользователя на страницу приложения
             navigate("/");
         } catch (error) {
-            // Отображаем сообщение об ошибке
-            alert("Ошибка регистрации");
+            if (error.response) {
+                // Ошибки, возвращаемые с сервера
+                if (error.response.status === 403) {
+                    // Проверка на конкретные дубликаты
+                    if (error.response.data.message.includes("nickname")) {
+                        setModalMessage("Такое имя пользователя уже существует.");
+                    } else if (error.response.data.message.includes("email")) {
+                        setModalMessage("Такой адрес электронной почты уже зарегистрирован.");
+                    } else {
+                        setModalMessage("Данные уже существуют. Попробуйте другие.");
+                    }
+                } else if (error.response.data.errors) {
+                    // Предполагаем, что сервер возвращает объект с полем errors
+                    const errorMessages = error.response.data.errors.map(err => err.msg).join(", ");
+                    setModalMessage(`Ошибки: ${errorMessages}`);
+                } else {
+                    setModalMessage("Ошибка регистрации. Пожалуйста, попробуйте позже.");
+                }
+            } else {
+                // Ошибки, не связанные с ответом сервера (например, проблемы с сетью)
+                setModalMessage("Сетевая ошибка. Пожалуйста, проверьте ваше подключение к интернету.");
+            }
+            setModalIsOpen(true);
         }
     };
 
@@ -104,6 +134,18 @@ const RegisterPage = () => {
             <p>
                 Уже есть аккаунт? <Link to="/login">Войти</Link>
             </p>
+
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                className="Modal"
+                overlayClassName="Overlay"
+                contentLabel="Ошибка регистрации"
+            >
+                <h2>Ошибка</h2>
+                <div>{modalMessage}</div>
+                <button onClick={() => setModalIsOpen(false)}>Закрыть</button>
+            </Modal>
         </div>
     );
 };

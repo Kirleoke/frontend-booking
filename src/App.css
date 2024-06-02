@@ -21,6 +21,7 @@ header {
     background-color: #282c34;
     padding: 20px;
     display: flex;
+    position: fixed;
     justify-content: center; /* Центрирование по горизонтали */
     align-items: center;
     width: 100%;
