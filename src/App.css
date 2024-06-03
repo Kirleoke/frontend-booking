@@ -22,7 +22,7 @@ header {
     padding: 20px;
     display: flex;
     position: fixed;
-    justify-content: center; /* Центрирование по горизонтали */
+    justify-content: center;
     align-items: center;
     width: 100%;
     top: 0;

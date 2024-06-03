@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from "react-modal";
 import { AuthContext } from './AuthContext';
+import {jwtDecode} from "jwt-decode";
 
 const LoginPage = () => {
     const [login, setLogin] = useState("");
@@ -24,6 +25,8 @@ const LoginPage = () => {
             // Сохраняем токен авторизации
             const token = response.data;
             console.log(token);
+            const decoded = jwtDecode(token.access);
+            console.log(decoded);
             // Сохраняем токены в локальном хранилище
             localStorage.setItem('token', response.data.access);
             localStorage.setItem('refreshToken', response.data.refresh);

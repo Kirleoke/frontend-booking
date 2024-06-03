@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-
-// Создаем экземпляр Axios по умолчанию
 const axiosInstance = axios.create();
 
 // Добавляем перехватчик запросов для добавления токена авторизации
@@ -20,5 +18,4 @@ axiosInstance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-// Экспортируем экземпляр Axios с перехватчиком
 export default axiosInstance;

@@ -183,13 +183,5 @@ p {
     cursor: pointer;
 }
 
-/* Футер */
-.footer {
-    background-color: #282c34;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
-    margin-top: 20px;
-}
+
 

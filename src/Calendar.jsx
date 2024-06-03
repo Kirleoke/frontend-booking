@@ -7,6 +7,7 @@ import Button from './TimeButton';
 import axios from './axiosInstance';
 import { AuthContext } from './AuthContext';
 import Modal from 'react-modal';
+import {jwtDecode} from "jwt-decode";
 
 Modal.setAppElement('#root');
 
@@ -17,7 +18,8 @@ export default function CalendarGfg() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [modalAction, setModalAction] = useState(null);
-    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, setIsAuthenticated} = useContext(AuthContext);
+
 
     function handleDateChange(date) {
         setSelectedDate(date);
@@ -46,21 +48,39 @@ export default function CalendarGfg() {
     }
 
     async function handleTimeButtonClick(periodID) {
+        console.log(0);
         try {
-            const userInfo = getUserInfo(); // Получаем информацию о пользователе
+            console.log(12);
+            const userInfo = getUserInfo();
+            console.log(1);
             await axios.post(`/api/v1/bookings/${selectedDate.toISOString().split('T')[0]}/periods/${periodID}/`, userInfo);
+            console.log(2);
             setModalMessage('Вы успешно забронировали время!');
+            console.log(3);
             setModalIsOpen(true);
+            console.log(4);
             getAvailableTimes();
+            console.log(5);
             getMyReservations();
+            console.log(6);
             sendTelegramNotification(userInfo, periodID); // Отправка уведомления в Telegram с данными о дате и времени
+            console.log(7);
         } catch (error) {
             handleAuthError(error);
         }
     }
 
+
     function getUserInfo() {
+        const decode = jwtDecode (localStorage.getItem('token'));
+        console.log(decode);
         return {
+            nickname: decode.nickname,
+            email: decode.email,
+            lastName: decode.lastName,
+            name: decode.name,
+            patronymic: decode.patronymic,
+            phone: decode.phone
         };
     }
 
@@ -120,7 +140,7 @@ export default function CalendarGfg() {
     async function sendTelegramNotification(userInfo, periodID) {
         try {
             const period = availableTimes.find(time => time.id === periodID);
-            const message = `Новая запись!\nДата: ${selectedDate.toISOString().split('T')[0]}\nВремя: ${period.value}`;
+            const message = `Новая запись!\nДата: ${selectedDate.toISOString().split('T')[0]}\nВремя: ${period.value}\nНик: ${userInfo.nickname}\nПочта: ${userInfo.email}\nФамилия: ${userInfo.lastName}\nИмя: ${userInfo.name}\nОтчество: ${userInfo.patronymic}\nНомер телефона: ${userInfo.phone}`;
 
             await axios.post(`https://api.telegram.org/bot7224423901:AAGDIA2fYiq2Q-XFgWjlJN7-JH7OlTL6AkY/sendMessage`, {
                 chat_id: 651730954,
@@ -134,7 +154,8 @@ export default function CalendarGfg() {
 
     function cancelReservationNotification(reservationInfo) {
         try {
-            const message = `Запись отменена!\nДата: ${reservationInfo.date}\nВремя: ${reservationInfo.reservationPeriod.value}`;
+            const userInfo = getUserInfo();
+            const message = `Запись отменена!\nДата: ${reservationInfo.date}\nВремя: ${reservationInfo.reservationPeriod.value}\nНик: ${userInfo.nickname}\nПочта: ${userInfo.email}\nФамилия: ${userInfo.lastName}\nИмя: ${userInfo.name}\nОтчество: ${userInfo.patronymic}\nНомер телефона: ${userInfo.phone}`;
 
             axios.post(`https://api.telegram.org/bot7224423901:AAGDIA2fYiq2Q-XFgWjlJN7-JH7OlTL6AkY/sendMessage`, {
                 chat_id: 651730954,
@@ -208,4 +229,3 @@ export default function CalendarGfg() {
         </div>
     );
 }
-
